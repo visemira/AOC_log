@@ -1,0 +1,322 @@
+{
+   "locations": [
+      {
+         "id": 1,
+         "grid_position": "wn1",
+         "name": "cleabert",
+         "ppm": 1,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1",
+         "tempower": null
+      },
+      {
+         "id": 2,
+         "grid_position": "nn1",
+         "name": "lorenndor",
+         "ppm": 4,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 3,
+         "grid_position": "en1",
+         "name": "arcania",
+         "ppm": 1,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 4,
+         "grid_position": "wn2",
+         "name": "fjemark",
+         "ppm": 2,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 5,
+         "grid_position": "en2",
+         "name": "uleyim",
+         "ppm": 2,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 6,
+         "grid_position": "wn3",
+         "name": "lando",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 7,
+         "grid_position": "en3",
+         "name": "cradena",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 8,
+         "grid_position": "wn4",
+         "name": "dalemont",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 9,
+         "grid_position": "en4",
+         "name": "galador",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 10,
+         "grid_position": "wn5",
+         "name": "offord",
+         "ppm": 2,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 11,
+         "grid_position": "en5",
+         "name": "avelew",
+         "ppm": 2,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 12,
+         "grid_position": "ww8",
+         "name": "slapdale",
+         "ppm": 4,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 13,
+         "grid_position": "ee8",
+         "name": "cristallion",
+         "ppm": 4,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      
+      {
+         "id": 14,
+         "grid_position": "ws5",
+         "name": "viaton",
+         "ppm": 2,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 15,
+         "grid_position": "es5",
+         "name": "lordarone",
+         "ppm": 2,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 16,
+         "grid_position": "ws4",
+         "name": "everfort",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 17,
+         "grid_position": "es4",
+         "name": "forgale",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 18,
+         "grid_position": "ws3",
+         "name": "moongrave",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 19,
+         "grid_position": "es3",
+         "name": "stramguard",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 20,
+         "grid_position": "ws2",
+         "name": "shadowmoore",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 21,
+         "grid_position": "es2",
+         "name": "odenguard",
+         "ppm": 1,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 22,
+         "grid_position": "ws1",
+         "name": "terranore",
+         "ppm": 1,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 23,
+         "grid_position": "ss1",
+         "name": "uggario",
+         "ppm": 4,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 24,
+         "grid_position": "es1",
+         "name": "morpork",
+         "ppm": 1,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 25,
+         "grid_position": "wn6",
+         "name": "verdant",
+         "ppm": 8,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 26,
+         "grid_position": "en6",
+         "name": "skullmore",
+         "ppm": 8,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 27,
+         "grid_position": "wn7",
+         "name": "kiaton",
+         "ppm": 4,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 28,
+         "grid_position": "en7",
+         "name": "frado",
+         "ppm": 4,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 29,
+         "grid_position": "wm8",
+         "name": "monbridge",
+         "ppm": 8,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 30,
+         "grid_position": "mm8",
+         "name": "modtown",
+         "ppm": 32,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 31,
+         "grid_position": "em8",
+         "name": "heless",
+         "ppm": 8,
+         "colspan":4,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 32,
+         "grid_position": "wm9",
+         "name": "wrand",
+         "ppm": 4,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 33,
+         "grid_position": "em9",
+         "name": "himdale",
+         "ppm": 4,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1",
+         "teampower":300
+      },
+      {
+         "id": 34,
+         "grid_position": "ws6",
+         "name": "joria",
+         "ppm": 8,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      },
+      {
+         "id": 35,
+         "grid_position": "es6",
+         "name": "drakemore",
+         "ppm": 8,
+         "colspan":6,
+         "capturedByColor": "white",
+         "capturedByID": "1"
+      }   
+   ]
+}
