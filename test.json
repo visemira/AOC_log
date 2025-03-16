@@ -1,0 +1,36 @@
+{
+   "locations": [
+      {
+         "id": 1,
+         "grid_position": "wn1",
+         "name": "cleabert",
+         "ppm": 1,
+         "capturedByColor": "red",
+         "capturedByID": "1"
+      },
+      {
+         "id": 2,
+         "grid_position": "nn1",
+         "name": "lorenndor",
+         "ppm": 4,
+         "capturedByColor": "red",
+         "capturedByID": "1"
+      },
+      {
+         "id": 3,
+         "grid_position": "en1",
+         "name": "arcania",
+         "ppm": 1,
+         "capturedByColor": "red",
+         "capturedByID": "1"
+      },
+      {
+         "id": 4,
+         "grid_position": "wn2",
+         "name": "fjemark",
+         "ppm": 2,
+         "capturedByColor": "red",
+         "capturedByID": "1"
+      }
+   ]
+}
