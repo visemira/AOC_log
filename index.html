@@ -6,45 +6,182 @@
    <link rel="icon" type="image/x-icon" href="favicon.ico">
 	<title>AOC</title>
 	<!-- Tailwind CSS CDN -->
-   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4?disableConsole"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.47/dist/vue.global.prod.min.js"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-100 text-gray-900 mb-12">
 	<div id="app">
-      <!-- Event Duration Input -->
+      <!-- Event Duration -->
       <div class="w-full mb-1 flex justify-end fixed bottom-0">
          <div class="flex flex-row gap-2 items-center bg-gray-300 rounded-lg pl-2 pr-2">
             <h2 class="block text-lg font-semibold">Area of Conquest:</h2>
             <p>{{ formattedEventDuration }}</p>
          </div>
       </div>
-      <!-- Total Points Section: Displaying Team Points in Columns -->
-      <div class="flex flex-row gap-2 mb-8">
-         <div class="w-full border rounded-lg p-2 bg-red-500 shadow-md text-center">
-            <p class="text-lg font-bold">{{ totalPoints("red") }}</p>
+
+      <!-- Total Points -->
+      <!-- Location Counts -->
+      <div class="flex flex-row gap-2 mb-4 select-none text-center">
+         <div class="w-full border rounded-lg p-2 bg-red-100 text-red-800 font-semibold">
+            <div class="flex flex-col">
+               <span>
+                  Total points: {{ totalPoints("red") }}
+               </span>
+               <span>
+                  No. of Locations: {{ locationCounts.red }}
+               </span>
+            </div>
          </div>
-         <div class="w-full border rounded-lg p-2 bg-orange-400 shadow-md text-center">
-            <p class="text-lg font-bold">{{ totalPoints("orange") }}</p>
+         <div class="w-full border rounded-lg p-2 bg-orange-100 text-orange-800 font-semibold">
+            
+            <div class="flex flex-col">
+               <span>
+                  Total points: {{ totalPoints("orange") }}
+               </span>
+               <span>
+                  No. of Locations: {{ locationCounts.orange }}
+               </span>
+            </div>
          </div>
-         <div class="w-full border rounded-lg p-2 bg-blue-500 shadow-md text-center">
-            <p class="text-lg font-bold">{{ totalPoints("blue") }}</p>
+         <div class="w-full border rounded-lg p-2 bg-blue-100 text-blue-800 font-semibold">
+            <div class="flex flex-col">
+               <span>
+                  Total points: {{ totalPoints("blue") }}
+               </span>
+               <span>
+                  No. of Locations: {{ locationCounts.blue }}
+               </span>
+            </div>
          </div>
-         <div class="w-full border rounded-lg p-2 bg-violet-500 shadow-md text-center">
-            <p class="text-lg font-bold">{{ totalPoints("violet") }}</p>
+         <div class="w-full border rounded-lg p-2 bg-violet-100 text-violet-800 font-semibold">
+            <div class="flex flex-col">
+               <span>
+                  Total points: {{ totalPoints("violet") }}
+               </span>
+               <span>
+                  No. of Locations: {{ locationCounts.violet }}
+               </span>
+            </div>
          </div>
       </div>
-      <!-- SVG Icons (omitted for brevity) -->
+
+      <!-- Location Grid -->
+      <div class="grid lg:grid-cols-24 md:grid-cols-5 gap-1">
+         <div 
+            v-for="location in locationData"
+            :key="location.id"
+            :class="`
+               text-sm
+               border 
+               flex 
+               select-none
+               flex-col  
+               items-center 
+               rounded-lg 
+               w-full
+               border-white
+               border-2
+               row-span-4             
+               lg:col-start-${location.colstart} 
+               lg:col-end-${location.colend}
+               md:col-start-${location.colstart} 
+               md:col-end-${location.colend}
+               row-start-${location.rowstart}
+               ${getCardColor(location.capturedByColor)}
+               shadow-md`"
+               @click="openLocationDialog(location)">
+               <div class="w-full flex flex-col items-center">
+                  <div>
+                     <span class="font-bold underline pr-1">
+                        {{ location.ppm }}
+                     </span>
+                     <span class="text-gray-700 uppercase">
+                        {{ location.name }}
+                     </span>
+                  </div>
+                  <div class="font-bold">
+                     <span v-if="location.teampower">
+                        {{ location.teampower }}
+                     </span>
+                     <span v-else>0</span>
+                  </div>
+               </div>
+         </div>
+      </div>
+
+      <!-- Dialog Box -->
+      <div v-if="isDialogOpen" class="select-none fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+         <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md space-y-6 animate-fade-in">
+            <h2 class="text-xl font-bold text-gray-800 text-center">Update Capture Info</h2>
+            <div>
+               <p class="block text-sm font-medium text-gray-700 mb-2">Captured By</p>
+               <div class="flex gap-3 flex-wrap justify-center">
+                  <div
+                     v-for="color in teamColors"
+                     :key="color.value"
+                     class="flex flex-col items-center cursor-pointer"
+                     @click="selectColor(color.value)"
+                  >
+                     <div
+                        :class="[
+                           'w-10 h-10 rounded-full border-2 transition-all duration-200',
+                           selectedLocation.capturedByColor === color.value
+                              ? 'ring-4 ring-offset-2 ring-blue-500 scale-110'
+                              : 'opacity-70 hover:opacity-100 hover:scale-105',
+                           color.class
+                        ]"
+                     ></div>
+                     <span class="text-xs mt-1 font-medium text-gray-700">{{ color.label }}</span>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <label for="powerInput" class="block text-sm font-medium text-gray-700 mb-1">Team Power (K)</label>
+               <input
+                  v-model="selectedLocation.teampower"
+                  type="number"
+                  id="powerInput"
+                  min="0"
+                  placeholder="e.g. 25"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+               />
+            </div>
+            <div class="flex justify-end gap-3 pt-2">
+               <button
+                  @click="closeDialog"
+                  class="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold transition"
+               >
+                  Cancel
+               </button>
+               <button
+                  @click="saveLocationData"
+                  class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition"
+               >
+                  Save
+               </button>
+            </div>
+         </div>
+      </div>
    </div>
 
    <script>
       const app = Vue.createApp({
          data() {
             return {
-               startDate: null,  // Set to current date and time
-               endDate: null,    // Will be set from JSON
-               locationData: [], // Initially empty
-               timerInterval: null, // To store interval ID
-               remainingTime: 0, // In milliseconds
+               startDate: null,
+               endDate: null,
+               locationData: [],
+               timerInterval: null,
+               isDialogOpen: false,
+               selectedLocation: null,
+               remainingTime: 0,
+               teamColors: [
+                  { label: 'White', value: 'white', class: 'bg-gray-300 border-gray-400' },
+                  { label: 'Red', value: 'red', class: 'bg-red-600 border-red-800' },
+                  { label: 'Orange', value: 'orange', class: 'bg-orange-500 border-orange-700' },
+                  { label: 'Blue', value: 'blue', class: 'bg-blue-600 border-blue-800' },
+                  { label: 'Violet', value: 'violet', class: 'bg-violet-600 border-violet-800' }
+               ]
             };
          },
          computed: {
@@ -52,13 +189,11 @@
                if (this.remainingTime <= 0) {
                   return { eventDurationDays: 0, eventDurationHours: 0, eventDurationMinutes: 0, eventDurationSeconds: 0 };
                }
-
-               const totalMinutes = Math.floor(this.remainingTime / (1000 * 60));  // Total minutes
-               const eventDurationDays = Math.floor(totalMinutes / 1440);  // Total days (1440 minutes in a day)
-               const eventDurationHours = Math.floor((totalMinutes % 1440) / 60);  // Remaining hours
-               const eventDurationMinutes = totalMinutes % 60;  // Remaining minutes
-               const eventDurationSeconds = Math.floor((this.remainingTime % (1000 * 60)) / 1000); // Remaining seconds
-
+               const totalMinutes = Math.floor(this.remainingTime / (1000 * 60));
+               const eventDurationDays = Math.floor(totalMinutes / 1440);
+               const eventDurationHours = Math.floor((totalMinutes % 1440) / 60);
+               const eventDurationMinutes = totalMinutes % 60;
+               const eventDurationSeconds = Math.floor((this.remainingTime % (1000 * 60)) / 1000);
                return {
                   eventDurationDays,
                   eventDurationHours,
@@ -71,70 +206,101 @@
                const hours = String(this.eventDuration.eventDurationHours).padStart(2, '0'); 
                const minutes = String(this.eventDuration.eventDurationMinutes).padStart(2, '0'); 
                const seconds = String(this.eventDuration.eventDurationSeconds).padStart(2, '0'); 
-
-               return `${days}:${hours}:${minutes}:${seconds}`;  // Format the string as "DD:HH:MM:SS"
+               return `${days}:${hours}:${minutes}:${seconds}`;
             },
+            locationCounts() {
+               return {
+                  red: this.locationData.filter(loc => loc.capturedByColor === 'red').length,
+                  orange: this.locationData.filter(loc => loc.capturedByColor === 'orange').length,
+                  blue: this.locationData.filter(loc => loc.capturedByColor === 'blue').length,
+                  violet: this.locationData.filter(loc => loc.capturedByColor === 'violet').length
+               };
+            }
          },
          methods: {
-            startCountdown() {
-               // Set the remaining time to the difference between endDate and current time
-               this.remainingTime = this.endDate - new Date();
-               if (this.remainingTime <= 0) {
-                  return; // If remaining time is already <= 0, stop here
+            selectColor(color) {
+               this.selectedLocation.capturedByColor = color;
+            },
+            getCardColor(teamColor) {
+               switch (teamColor) {
+                  case 'red': return 'bg-red-600 text-white';
+                  case 'orange': return 'bg-orange-400 text-white';
+                  case 'blue': return 'bg-blue-400 text-white';
+                  case 'violet': return 'bg-violet-400 text-white';
+                  default: return 'bg-gray-200';
                }
-
-               // Start the countdown
+            },
+            startCountdown() {
+               this.remainingTime = this.endDate - new Date();
+               if (this.remainingTime <= 0) return;
                this.timerInterval = setInterval(() => {
                   this.remainingTime = this.endDate - new Date();
                   if (this.remainingTime <= 0) {
-                     clearInterval(this.timerInterval);  // Stop the timer when time is up
-                     this.remainingTime = 0;  // Prevent negative time
+                     clearInterval(this.timerInterval);
+                     this.remainingTime = 0;
                   }
-               }, 1000); // Update every second
+               }, 1000);
             },
             totalPoints(team) {
-               // Example logic for calculating points (you should replace this with your real logic)
-               const points = {
-                  red: 40000,
-                  orange: 15,
-                  blue: 20,
-                  violet: 25
+               return this.locationData
+                  .filter(loc => loc.capturedByColor === team)
+                  .reduce((sum, loc) => sum + (parseInt(loc.ppm) || 0), 0);
+            },
+            openLocationDialog(location) {
+               this.selectedLocation = { ...location };
+               this.isDialogOpen = true;
+            },
+            closeDialog() {
+               this.isDialogOpen = false;
+               this.selectedLocation = null;
+            },
+            saveLocationData() {
+               const index = this.locationData.findIndex(loc => loc.id === this.selectedLocation.id);
+               if (index !== -1) {
+                  this.locationData[index] = { ...this.selectedLocation };
+                  this.saveToLocalStorage();
+               }
+               this.closeDialog();
+            },
+            saveToLocalStorage() {
+               const dataToSave = {
+                  locations: this.locationData,
+                  eventDuration: this.eventDuration,
                };
-               return points[team] || 0;
+               localStorage.setItem('eventData', JSON.stringify(dataToSave));
             }
          },
          created() {
-            // Set the startDate to the current date and time
-            this.startDate = new Date();  // This will be the current date and time
+            this.startDate = new Date();
 
-            // Fetch the event time data from event_time.json
+            const savedData = localStorage.getItem('eventData');
+            if (savedData) {
+               const parsed = JSON.parse(savedData);
+               this.locationData = parsed.locations || [];
+            }
+
             fetch('event_time.json')
-            .then(response => response.json())  // Parse JSON
-            .then(data => {
-               this.endDate = new Date(data.endDate);      // Set endDate from the JSON
-               this.startDate = new Date(data.startDate);  // Set startDate from the JSON
+               .then(response => response.json())
+               .then(data => {
+                  this.endDate = new Date(data.endDate);
+                  this.startDate = new Date(data.startDate);
+                  const currentTime = new Date();
+                  if (this.startDate <= currentTime) {
+                     this.startCountdown();
+                  }
+               });
 
-               const currentTime = new Date();
-               if (this.startDate <= currentTime) {
-                  // Start countdown if the current time is greater than or equal to start time
-                  this.startCountdown();
-               } else {
-               }
-            })
-            .catch(error => {
-            });
-
-            // Fetch the location data when the Vue instance is created
-            fetch('location_points.json')
-            .then(response => response.json())  // Parse JSON
-            .then(data => {
-               this.locationData = data;  // Update locationData with the fetched data
-            })
-            .catch(error => {
-            });
+            fetch('location.json')
+               .then(response => response.json())
+               .then(data => {
+                  if (!this.locationData || this.locationData.length === 0) {
+                     this.locationData = data.locationData;
+                     this.saveToLocalStorage();
+                  }
+               });
          }
       });
-      // Mount the Vue app to the DOM element with id="app"
+
       app.mount('#app');
    </script>
 </body>
