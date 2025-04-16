@@ -137,38 +137,22 @@
          <div 
             v-for="location in locationData"
             :key="location.id"
-            :class="`
-               text-sm
-               border 
-               flex 
-               select-none
-               flex-col  
-               items-center 
-               rounded-lg 
-               w-full
-               border-white
-               border-2
-               row-span-4             
-               lg:col-start-${location.colstart} 
-               lg:col-end-${location.colend}
-               md:col-start-${location.colstart} 
-               md:col-end-${location.colend}
-               row-start-${location.rowstart}
-               ${getCardColor(location.capturedByColor)}
-               shadow-md`"
-               @click="openLocationDialog(location)">
+            :class="['text-sm border flex select-none flex-col items-center rounded-lg w-full border-white border-2 row-span-4 shadow-md transform hover:scale-105 transition duration-300 ease-in-out', getGridClasses(location)]"
+            @click="openLocationDialog(location)">
                <div class="w-full flex flex-col items-center">
                   <div>
                      <span class="font-bold underline pr-1">{{ location.ppm }}</span>
-                     <span class="text-gray-700 uppercase">{{ location.name }}</span>
+                     <span class="font-bold uppercase">{{ location.name }}</span>
                   </div>
                   <div class="font-bold">
-                     <span v-if="location.teampower">{{ location.teampower }}</span>
+                     <span v-if="location.teampower">{{ location.teampower }} K</span>
                      <span v-else>0</span>
                   </div>
                </div>
          </div>
       </div>
+
+
 
       <!-- Dialog Box -->
       <div v-if="isDialogOpen" class="select-none fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -200,7 +184,7 @@
                   type="number"
                   id="powerInput"
                   min="0"
-                  placeholder="e.g. 25"
+                  placeholder="e.g. 250"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                />
             </div>
@@ -296,15 +280,25 @@
             }
          },
          methods: {
+            getGridClasses(location) {
+               return [
+                  `lg:col-start-${location.colstart}`,
+                  `lg:col-end-${location.colend}`,
+                  `md:col-start-${location.colstart}`,
+                  `md:col-end-${location.colend}`,
+                  `row-start-${location.rowstart}`,
+                  this.getCardColor(location.capturedByColor)
+               ];
+            },
             selectColor(color) {
                this.selectedLocation.capturedByColor = color;
             },
             getCardColor(teamColor) {
                switch (teamColor) {
-                  case 'red': return 'bg-red-600 text-white';
-                  case 'orange': return 'bg-orange-400 text-white';
-                  case 'blue': return 'bg-blue-400 text-white';
-                  case 'violet': return 'bg-violet-400 text-white';
+                  case 'red': return 'bg-red-500 text-white';
+                  case 'orange': return 'bg-orange-500 text-white';
+                  case 'blue': return 'bg-blue-500 text-white';
+                  case 'violet': return 'bg-violet-500 text-white';
                   default: return 'bg-gray-200';
                }
             },
@@ -350,11 +344,9 @@
                this.closeDialog();
             },
             saveToLocalStorage() {
-               const dataToSave = {
-                  locations: this.locationData,
-                  eventDuration: this.eventDuration,
-               };
-               localStorage.setItem('eventData', JSON.stringify(dataToSave));
+               localStorage.setItem('eventData', JSON.stringify({
+                  locations: this.locationData
+               }));
             },
             downloadLocationData() {
                const dataStr = JSON.stringify(this.locationData, null, 2);
@@ -383,6 +375,8 @@
                   } catch (err) {
                      alert('Error parsing file.');
                   }
+                  // Reset file input
+                  event.target.value = '';
                };
                reader.readAsText(file);
             }
@@ -404,6 +398,11 @@
                   if (this.startDate <= new Date()) {
                      this.startCountdown();
                   }
+               })
+               .catch(err => {
+                  console.error('Failed to load event time:', err);
+                  this.endDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000); // fallback 2-day event
+                  this.startCountdown();
                });
 
             fetch('location.json')
@@ -413,6 +412,9 @@
                      this.locationData = data.locationData;
                      this.saveToLocalStorage();
                   }
+               })
+               .catch(err => {
+                  console.error('Failed to load location data:', err);
                });
          }
       });
